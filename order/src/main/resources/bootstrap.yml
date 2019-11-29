@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: order
+  cloud:
+    config:
+      discovery:
+        service-id: CONFIG
+        enabled: true
+      profile: dev
+    stream:
+      bindings:
+        OnputMessage:
+          group: order
+          content-type: application/json
+  redis:
+    host: 192.168.43.173
+    port: 6379
+  zipkin:
+    #base-url:当你设置sleuth-cli收集信息后通过http传输到zinkin-server时，需要在这里配置
+    base-url: http://zipkin:9411/
+    locator:
+      discovery:
+        enabled: true
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      #收集追踪信息的比率，如果是0.  1则表示只记录10%的追踪数据，如果要全部追踪，设置为1（实际场景不推荐，因为会造成不小的性能消耗）
+      probability: 1
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/
+  instance:
+    prefer-ip-address: true
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 5000
+#    # 给某个方法单独设置超时时间  key是方法名
+#    getProductList:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 5000
+logging:
+  level:
+    org.springframework.cloud.openfeign: debug
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 12000
+server:
+  port: 9001

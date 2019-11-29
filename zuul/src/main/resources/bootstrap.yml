@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: zuul
+  cloud:
+    config:
+      discovery:
+        service-id: CONFIG
+        enabled: true
+      profile: dev
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1:8761/eureka/,http://eureka2:8762/eureka/
+#zuul:
+#  routes:
+#    # 简洁写法
+##    product: /myProduct/**
+#    myProduct:
+#      path: /myProduct/**
+#      serviceId: product
+#      sensitiveHeaders:
+#  # 排除某些路由 这样访问的时候就是404
+#  ignored-patterns:
+#    - /**/product/list
+##  /myProduct/**  ->  /product/product/list  myProduct: 可以随意命名
+#
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+server:
+  port: 9000
+#        include: '*'
